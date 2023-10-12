@@ -16,6 +16,8 @@ class SignUpForm(FlaskForm):
     submit           = SubmitField("Sign Up")
 
 class EditProfile(FlaskForm):
+    username         = StringField("Username", validators=[DataRequired(), Length(min = 4, max = 8)])
+    new_name         = TextAreaField("Name")
     new_bio          = TextAreaField("New Bio")
     new_profile_pic  = TextAreaField("New Profile Picture")
     submit           = SubmitField("Update Profile")
