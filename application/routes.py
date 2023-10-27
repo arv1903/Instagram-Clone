@@ -2,8 +2,8 @@ from flask import render_template, redirect, url_for, flash
 from flask_login import login_user, login_required, logout_user, current_user
 
 from application import app
-from application.models import User
-from application.forms import LoginForm
+from application.models import *
+from application.forms import *
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -23,7 +23,7 @@ def login():
         else:
             flash('Invalid username or password', 'error')
 
-    return render_template('login.html', form = form)
+    return render_template('login.html', form=form)
 
 @app.route('/logout')
 @login_required
@@ -35,6 +35,10 @@ def logout():
 @login_required
 def protected():
     return 'This is a protected page. You are logged in as ' + current_user.username
+
+@app.route('/')
+def index():
+    return 'ok'
 
 if __name__ == '__main__':
     app.run(debug=True)
