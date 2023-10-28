@@ -1,4 +1,84 @@
-<!DOCTYPE html>
+{% extends 'layout.html' %}
+
+{% block content %}
+	<div class="">
+    <form method="POST" action="">
+			{{ form.hidden_tag() }}
+			<fieldset class="">
+				<legend class="">Profile Edit</legend>
+
+				<div class="">
+					{{ form.username.label(class="") }}
+
+					{% if form.username.errors%}
+						{{ form.username(class="") }}
+						<div class="">
+							{% for error in form.username.errors %}
+								<span>{{ error }}</span>
+							{% endfor %}
+						</div>
+					{% else %}
+						{{ form.username(class=" ") }}
+					{% endif %}
+
+				</div>
+
+        <div class="">
+					{{ form.email.label(class="") }}
+
+					{% if form.email.errors%}
+						{{ form.email(class="") }}
+						<div class="">
+							{% for error in form.email.errors %}
+								<span>{{ error }}</span>
+							{% endfor %}
+						</div>
+					{% else %}
+						{{ form.email(class=" ") }}
+					{% endif %}
+
+				</div>
+
+        <div class="">
+					{{ form.profile_pic.label(class="") }}
+
+					{% if form.profile_pic.errors%}
+						{{ form.profile_pic(class="") }}
+						<div class="">
+							{% for error in form.profile_pic.errors %}
+								<span>{{ error }}</span>
+							{% endfor %}
+						</div>
+					{% else %}
+						{{ form.profile_pic(class=" ") }}
+					{% endif %}
+
+				</div>
+
+        <div class="">
+					{{ form.password.label(class="") }}
+
+					{% if form.password.errors%}
+						{{ form.password(class="") }}
+						<div class="">
+							{% for error in form.password.errors %}
+								<span>{{ error }}</span>
+							{% endfor %}
+						</div>
+					{% else %}
+						{{ form.password(class=" ") }}
+					{% endif %}
+
+				</div>
+			</fieldset>
+			<div class="">
+				{{ form.submit(class="btn btn-outline-info") }}
+			</div>
+		</form>
+	</div>
+{% endblock content %}
+
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -54,4 +134,4 @@
         <div class="EditProfile" style="width: 406px; left: 0px; top: 40px; position: absolute; text-align: center; color: black; font-size: 16px; font-family: Inter; font-weight: 400; line-height: 21px; word-wrap: break-word">Edit Profile</div>
       </div>
 </body>
-</html>
+</html> -->

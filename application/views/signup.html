@@ -1,4 +1,105 @@
-<!DOCTYPE html>
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="">
+            <legend class="">Daftar</legend>
+
+            <div class="">
+                {{ form.username.label(class="") }}
+
+                {% if form.username.errors%}
+                    {{ form.username(class="") }}
+                    <div class="">
+                        {% for error in form.username.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.username(class="form-control ") }}
+                {% endif %}
+
+            </div>
+
+            <div class="">
+                {{ form.fullname.label(class="") }}
+
+                {% if form.fullname.errors%}
+                    {{ form.fullname(class="") }}
+                    <div class="">
+                        {% for error in form.fullname.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.fullname(class="form-control ") }}
+                {% endif %}
+
+            </div>
+
+            <div class="">
+                {{ form.email.label(class="") }}
+
+                {% if form.email.errors%}
+                    {{ form.email(class="") }}
+                    <div class="">
+                        {% for error in form.email.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.email(class="form-control ") }}
+                {% endif %}
+
+            </div>
+
+            <div class="">
+                {{ form.password.label(class="") }}
+
+                {% if form.password.errors%}
+                    {{ form.password(class="") }}
+                    <div class="">
+                        {% for error in form.password.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.password(class="form-control ") }}
+                {% endif %}
+
+            </div>
+
+            <div class="">
+                {{ form.confirm_password.label(class="") }}
+
+                {% if form.confirm_password.errors%}
+                    {{ form.confirm_password(class="") }}
+                    <div class="">
+                        {% for error in form.password.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.confirm_password(class="form-control ") }}
+                {% endif %}
+
+            </div>
+        </fieldset>
+        <div class="">
+            {{ form.submit(class="btn btn-outline-info") }}
+            <small class="">
+                <a href="{{ url_for('login') }}">Sudah punya akun?</a>
+            </small>
+        </div>
+        
+
+    </form>
+</div>
+{% endblock content %}
+
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -47,4 +148,4 @@
     <a href = "" class="AlreadyHaveAnAccountLogIn" style="width: 239px; height: 19px; left: 78px; top: 535px; position: absolute; text-align: center"><span style="color: rgba(0, 0, 0, 0.20); font-size: 14px; font-family: Inter; font-weight: 400; word-wrap: break-word">already have an account? </span><span style="color: rgba(55, 151, 239, 0.89); font-size: 14px; font-family: Inter; font-weight: 400; word-wrap: break-word">Log in</span></a>
   </div>
 </body>
-</html>
+</html> -->

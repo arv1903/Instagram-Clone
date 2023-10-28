@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+            box-sizing: border-box;
+        }
+
+        body {
+            padding: 20px;
+        }
+
+        section.content {
+            min-height: calc(100vh - 100px);
+        }
+
+        header ul li {
+            display: inline-block;
+        }
+    </style>
+    {% if title %}
+        <title>{{ title }} - Website</title>
+    {% else %}
+        <title>Website</title>
+    {% endif %}
+</head>
+<body>
+    {% if current_user.is_authenticated %}
+        {% include "components/login-header.html" %}
+    {% else %}
+        {% include "components/logout-header.html" %}
+    {% endif %}
+    <div class="alert-box">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+    <section class="content">
+        {% block content %}{% endblock %}
+    </section>
+    {% include "components/footer.html" %}
+</body>
+</html>

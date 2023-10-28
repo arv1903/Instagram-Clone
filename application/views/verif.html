@@ -1,4 +1,53 @@
-<!DOCTYPE html>
+{% extends 'layout.html' %}
+
+{% block content %}
+	<div class="">
+    <form method="POST" action="">
+			{{ form.hidden_tag() }}
+			<fieldset class="">
+				<legend class="">Verification</legend>
+
+				<div class="">
+					{{ form.password.label(class="") }}
+
+					{% if form.password.errors%}
+						{{ form.password(class="") }}
+						<div class="">
+							{% for error in form.password.errors %}
+								<span>{{ error }}</span>
+							{% endfor %}
+						</div>
+					{% else %}
+						{{ form.password(class=" ") }}
+					{% endif %}
+
+				</div>
+
+        <div class="">
+					{{ form.confirm_password.label(class="") }}
+
+					{% if form.confirm_password.errors%}
+						{{ form.confirm_password(class="") }}
+						<div class="">
+							{% for error in form.confirm_password.errors %}
+								<span>{{ error }}</span>
+							{% endfor %}
+						</div>
+					{% else %}
+						{{ form.confirm_password(class=" ") }}
+					{% endif %}
+
+				</div>
+			</fieldset>
+			<div class="">
+				{{ form.submit(class="btn btn-outline-info") }}
+			</div>
+		</form>
+	</div>
+{% endblock content %}
+
+
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -29,4 +78,4 @@
         <img class="InstagramLogo" style="width: 182px; height: 61px; left: 91px; top: 88px; position: absolute" src="../static/images/inst.png" />
       </div>
 </body>
-</html>
+</html> -->
