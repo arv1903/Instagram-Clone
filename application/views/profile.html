@@ -1,5 +1,25 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <h1>Hi - {{ current_user.fullname }}</h1>
+    <div class="profile-card">
+        <div class="wrapper">
+            <div class="profile-photo">
+                <img src="{{ url_for('static', filename='images/' + current_user.profile_pic ) }}" alt="Profile Photo">
+            </div>
+        </div>
+        <div class="profile-info">
+            <h2>{{current_user.fullname}}</h2>
+            <p>{{ current_user.bio }}</p>
+            <p>Followings: {{ current_user.following_users|length }}</p>
+            <p>Followers : {{ current_user.follower_users|length }}</p>
+        </div>
+    </div>
+    <form action="{{ url_for('edit_profile') }}">
+        <button type = "submit" class = "edit-profile" style="display: flex; width: 100%; justify-content: center; padding: 10px; margin-bottom: 20px; background-color: white;">Edit Profile</button>
+    </form>
+    <div class="image-container">
+        {% for post in posts %}
+        <div class="image-item"><img src="{{ url_for('static', filename='' + post.photo) }}" alt="Post Image"></div>
+        {% endfor %}
+    </div>
 {% endblock content %}

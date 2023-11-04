@@ -23,7 +23,23 @@
 
 				</div>
 
-        <div class="">
+				<div class="">
+					{{ form.fullname.label(class="") }}
+
+					{% if form.fullname.errors%}
+						{{ form.fullname(class="") }}
+						<div class="">
+							{% for error in form.fullname.errors %}
+								<span>{{ error }}</span>
+							{% endfor %}
+						</div>
+					{% else %}
+						{{ form.fullname(class=" ") }}
+					{% endif %}
+
+				</div>
+
+				<div class="">
 					{{ form.email.label(class="") }}
 
 					{% if form.email.errors%}
@@ -39,7 +55,7 @@
 
 				</div>
 
-        <div class="">
+        		<div class="">
 					{{ form.profile_pic.label(class="") }}
 
 					{% if form.profile_pic.errors%}
@@ -55,18 +71,18 @@
 
 				</div>
 
-        <div class="">
-					{{ form.password.label(class="") }}
+				<div class="">
+					{{ form.bio.label(class="") }}
 
-					{% if form.password.errors%}
-						{{ form.password(class="") }}
+					{% if form.bio.errors%}
+						{{ form.bio(class="") }}
 						<div class="">
-							{% for error in form.password.errors %}
+							{% for error in form.bio.errors %}
 								<span>{{ error }}</span>
 							{% endfor %}
 						</div>
 					{% else %}
-						{{ form.password(class=" ") }}
+						{{ form.bio(class=" ") }}
 					{% endif %}
 
 				</div>

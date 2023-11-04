@@ -1,11 +1,11 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-	<div class="">
+	<div class="login">
         <form method="POST" action="">
 			{{ form.hidden_tag() }}
-			<fieldset class="">
-				<legend class="">Login</legend>
+			<fieldset class="field-login">
+				<legend class="border-login">Login</legend>
 
 				<div class="">
 					{{ form.username.label(class="") }}
@@ -42,7 +42,7 @@
 			<div class="">
 				{{ form.submit(class="btn btn-outline-info") }}
 				<small class="">
-					<a href="#">Lupa Kata Sandi?</a>
+					<a href="{{ url_for('forgot') }}">Lupa Kata Sandi?</a>
 				</small>
 			</div>
 			<small class="">

@@ -1,43 +1,42 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-	<div class="">
-    <form method="POST" action="">
-			{{ form.hidden_tag() }}
-			<fieldset class="">
-				<legend class="">Create Post</legend>
+	<div class="create">
+    	<form method="POST" action="">
+		{{ form.hidden_tag() }}
+		<fieldset class="">
+			<legend class="">Create Post</legend>
 
-				<div class="">
-					{{ form.post_pic.label(class="") }}
+			<div class="">
+				{{ form.post_pic.label(class="") }}
 
-					{% if form.post_pic.errors%}
-						{{ form.post_pic(class="") }}
-						<div class="">
-							{% for error in form.post_pic.errors %}
-								<span>{{ error }}</span>
-							{% endfor %}
-						</div>
-					{% else %}
-						{{ form.post_pic(class=" ") }}
-					{% endif %}
+				{% if form.post_pic.errors%}
+					{{ form.post_pic(class="") }}
+					<div class="">
+						{% for error in form.post_pic.errors %}
+							<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+				{% else %}
+					{{ form.post_pic(class=" ") }}
+				{% endif %}
 
-				</div>
-
+			</div>
         <div class="">
-					{{ form.caption.label(class="") }}
+			{{ form.caption.label(class="") }}
 
-					{% if form.caption.errors%}
-						{{ form.caption(class="") }}
-						<div class="">
-							{% for error in form.caption.errors %}
-								<span>{{ error }}</span>
-							{% endfor %}
-						</div>
-					{% else %}
-						{{ form.caption(class=" ") }}
-					{% endif %}
-
+			{% if form.caption.errors%}
+				{{ form.caption(class="") }}
+				<div class="">
+					{% for error in form.caption.errors %}
+						<span>{{ error }}</span>
+					{% endfor %}
 				</div>
+			{% else %}
+				{{ form.caption(class=" ") }}
+			{% endif %}
+
+		</div>
 			</fieldset>
 			<div class="">
 				{{ form.submit(class="btn btn-outline-info") }}

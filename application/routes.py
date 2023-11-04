@@ -1,9 +1,10 @@
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_user, login_required, logout_user, current_user
 
 from application import app
 from application.models import *
 from application.forms import *
+from application.utils import save_image
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -19,7 +20,7 @@ def login():
         user = User.query.filter_by(username=username).first()
         if user and password == user.password:
             login_user(user)
-            return redirect(url_for('profile'))
+            return redirect(url_for('profile', username = current_user.username))
         else:
             flash('Invalid username or password', 'error')
 
@@ -31,19 +32,53 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
-@app.route('/profile')
-@login_required
-def profile():
-    return render_template('profile.html', title=f'{current_user.fullname} Profile')
+# @app.route('/profile')
+# @login_required
+# def profile():
+#     return render_template('profile.html', title=f'{current_user.fullname} Profile')
 
-@app.route('/')
+@app.route('/<string:username>')
+@login_required
+def profile(username):
+    posts = current_user.posts
+    return render_template('profile.html', title=f'{current_user.fullname} Profile', posts = posts)
+
+@app.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
-    return render_template('index.html', title='Home')
+    form = CreatePostForm()
 
-@app.route('/signup')
+    if form.validate_on_submit():
+        post = Post(
+            author_id = current_user.id,
+            caption = form.caption.data
+        )
+        post.photo = save_image(form.post_pic.data)
+        db.session.add(post)
+        db.session.commit()
+        flash('Your image has been posted ❤️!', 'success')
+
+    page = request.args.get('page', 1, type=int)
+    posts = Post.query.order_by(Post.post_date.desc()).paginate(page=page, per_page=3)
+    # posts.reverse()
+
+    return render_template('index.html', title='Home', form = form, posts = posts)
+
+@app.route('/signup', methods=['GET', 'POST'])
 def signup():
     form = SignUpForm()
+
+    if form.validate_on_submit():
+        user = User(
+            username = form.username.data,
+            password = form.password.data,
+            fullname = form.fullname.data,
+            email    = form.email.data,
+            profile_pic = 'default.jpg'
+        )
+        db.session.add(user)
+        db.session.commit()
+        return redirect(url_for('login'))
     return render_template('signup.html', title='SignUp', form=form)
 
 @app.route('/about')
@@ -55,10 +90,22 @@ def forgot():
     form = ForgotPasswordForm()
     return render_template('forgot_password.html', title='Forgot', form = form)
 
-@app.route('/edit_profile')
+@app.route('/edit_profile', methods=['GET', 'POST'])
 def edit_profile():
     form = EditProfileForm()
-    return render_template('profile_edit.html', title='Edit Profile', form = form)
+
+    user = User.query.get(current_user.id)
+    if form.validate_on_submit:
+        user.username = form.username.data,
+        user.fullname = form.fullname.data,
+        user.email    = form.email.data
+        user.profile_pic = form.profile_pic.data,
+        user.bio = form.bio.data
+        db.session.commit()        
+        return redirect(url_for('profile'))
+
+
+    return render_template('profile_edit.html', title='Edit Profile', form = form, username=user.username)
 
 @app.route('/reset')
 def reset():

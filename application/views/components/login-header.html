@@ -1,11 +1,11 @@
 <header>
-    <img src="#" alt="logo">
+    <img src="../../static/images/inst.png" alt="logo" style = "width: 100px;">
     <ul>
         <li>
             <a href="{{ url_for('index')}}">Home</a>
         </li>
         <li>
-            <a href="{{ url_for('profile') }}">Profile</a>
+            <a href="{{ url_for('profile', username = current_user.username) }}">Profile</a>
         </li>
         <li>
             <a href="{{ url_for('logout') }}">Logout</a>
