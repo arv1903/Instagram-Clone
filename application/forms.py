@@ -21,9 +21,9 @@ class SignUpForm(FlaskForm):
 
 class EditProfileForm(FlaskForm):
     username             = StringField("Username", validators=[DataRequired(), Length(min=4, max=12), exists_username])
-    fullname             = StringField("Username", validators=[DataRequired(), Length(min=4, max=12), exists_username])
+    fullname             = StringField("Fullname", validators=[DataRequired(), Length(min=4, max=12), exists_username])
     email                = EmailField("E-mail", validators=[DataRequired(), Email(), exists_email])
-    profile_pic          = FileField("Profile picture", validators=[FileAllowed(["jpg", "png", "jpeg"])])
+    profile_pic          = FileField("Profile picture", validators=[DataRequired(), FileAllowed(["jpg", "png", "jpeg"])])
     bio                  = StringField("Bio")
     submit               = SubmitField("Update profile")
 
@@ -34,7 +34,7 @@ class ResetPasswordForm(FlaskForm):
     submit               = SubmitField("Reset password")
 
 class ForgotPasswordForm(FlaskForm):
-    email                = PasswordField("E-mail", validators=[DataRequired(), not_exists_email])
+    email                = EmailField("E-mail", validators=[DataRequired(), Email(), exists_email])
     # recaptcha            = RecaptchaField()
     submit               = SubmitField("Send link verification to e-mail")
 

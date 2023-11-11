@@ -10,7 +10,7 @@ class User(db.Model, UserMixin):
     password        = db.Column(db.String(128), nullable = False)
     fullname        = db.Column(db.String(128), nullable = False)
     email           = db.Column(db.String(128), nullable = False)
-    profile_pic     = db.Column(db.String(128), default="default.jpg")
+    profile_pic     = db.Column(db.String(128), nullable = False)
     bio             = db.Column(db.String(128))
     join_date       = db.Column(db.DateTime, default=datetime.utcnow)
     status          = db.Column(db.Boolean, default=True)

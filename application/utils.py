@@ -35,11 +35,15 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 #END OF LOGIN MANAGER UTILS
 
-def save_image(form_picture_data):
+def save_image(form_picture_data, mode):
     random_hex = secrets.token_hex(5)
     _, f_ext = os.path.splitext(form_picture_data.filename)
-    picture_fn = 'images/posts/' + random_hex + f_ext
-    picture_path = os.path.join(current_app.root_path, 'static/', picture_fn)
+    if(mode == 1):
+        picture_fn = random_hex + f_ext
+        picture_path = os.path.join(current_app.root_path, 'static/', 'images/' + picture_fn)
+    else:
+        picture_fn = 'images/posts/' + random_hex + f_ext
+        picture_path = os.path.join(current_app.root_path, 'static/', picture_fn)
 
     image  = Image.open(form_picture_data)
     # i_width, i_height = image.size()

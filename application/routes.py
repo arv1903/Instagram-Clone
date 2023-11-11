@@ -1,7 +1,8 @@
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_user, login_required, logout_user, current_user
+from flask_mail import Message
 
-from application import app
+from application import app, mail
 from application.models import *
 from application.forms import *
 from application.utils import save_image
@@ -53,7 +54,7 @@ def index():
             author_id = current_user.id,
             caption = form.caption.data
         )
-        post.photo = save_image(form.post_pic.data)
+        post.photo = save_image(form.post_pic.data, 0)
         db.session.add(post)
         db.session.commit()
         flash('Your image has been posted ❤️!', 'success')
@@ -85,25 +86,37 @@ def signup():
 def about():
     return render_template('about.html', title='About')
 
-@app.route('/forgot')
+@app.route('/forgot', methods=['GET', 'POST'])
 def forgot():
     form = ForgotPasswordForm()
+
+    if form.validate_on_submit():
+        msg = Message("Hello", sender="marvin07ar@gmail.com", recipients=[form.email.data])
+        print(form.email.data)
+        mail.send(msg)
+
     return render_template('forgot_password.html', title='Forgot', form = form)
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
+@login_required
 def edit_profile():
     form = EditProfileForm()
 
-    user = User.query.get(current_user.id)
-    if form.validate_on_submit:
-        user.username = form.username.data,
-        user.fullname = form.fullname.data,
+    user = User.query.filter_by(id=current_user.id).first()
+    tmp1, tmp2 = user.join_date, user.status
+    print(user.username)
+    if form.validate_on_submit():
+        user.username = form.username.data
+        user.fullname = form.fullname.data
         user.email    = form.email.data
-        user.profile_pic = form.profile_pic.data,
+        user.profile_pic = save_image(form.profile_pic.data, 1)
+        if user.profile_pic == None:
+            user.profile_pic = "default.png"
         user.bio = form.bio.data
+        user.join_date = tmp1
+        user.status = tmp2
         db.session.commit()        
-        return redirect(url_for('profile'))
-
+        return render_template('profile.html', title=f'{current_user.fullname} Profile', posts = current_user.posts)
 
     return render_template('profile_edit.html', title='Edit Profile', form = form, username=user.username)
 
@@ -118,11 +131,14 @@ def verif():
     return render_template('verif.html', title='Verif', form = form)
 
 @app.route('/create_post')
+@login_required
 def create():
     form = CreatePostForm()
     return render_template('create_post.html', title='Create', form = form)
+    
 
 @app.route('/edit_post')
+@login_required
 def edit_post():
     form = EditPostForm()
     return render_template('edit_post.html', title='Edit Post', form = form)

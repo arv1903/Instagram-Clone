@@ -22,22 +22,22 @@
 				{% endif %}
 
 			</div>
-        <div class="">
-			{{ form.caption.label(class="") }}
+			<div class="">
+				{{ form.caption.label(class="") }}
 
-			{% if form.caption.errors%}
-				{{ form.caption(class="") }}
-				<div class="">
-					{% for error in form.caption.errors %}
-						<span>{{ error }}</span>
-					{% endfor %}
-				</div>
-			{% else %}
-				{{ form.caption(class=" ") }}
-			{% endif %}
+				{% if form.caption.errors%}
+					{{ form.caption(class="") }}
+					<div class="">
+						{% for error in form.caption.errors %}
+							<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+				{% else %}
+					{{ form.caption(class=" ") }}
+				{% endif %}
 
-		</div>
-			</fieldset>
+			</div>
+				</fieldset>
 			<div class="">
 				{{ form.submit(class="btn btn-outline-info") }}
 			</div>
