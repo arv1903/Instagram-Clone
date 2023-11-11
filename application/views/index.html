@@ -28,8 +28,17 @@
     <div class="post-container">
         {% for post in posts.items %}
             <div class="post" style = "border: 1px black solid; margin: 10px 0px;">
+                <div class = "post-header">
+                    <img src="{{ url_for('static', filename='images/' + post.posts_owner.profile_pic) }}" alt="Post owner" style = "height : 30px; width: 30px;">
+                    <h2>{{ post.posts_owner.username }}</h2>
+                </div>
                 <img src="{{ url_for('static', filename='' + post.photo) }}" alt="Post Image">
                 <p>{{ post.caption }}</p>
+
+                <div class="post-footer">
+                    <span id = "likeBtn">❤️{{ post.likes | length  }}</span>
+                    <span id = "commentBtn">🚩{{ post.comments | length }}</span>
+                </div>
             </div>
         {% endfor %}
     </div>

@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash, request
+from flask import render_template, redirect, url_for, flash, request, make_response, jsonify
 from flask_login import login_user, login_required, logout_user, current_user
 from flask_mail import Message
 
@@ -79,6 +79,8 @@ def signup():
         )
         db.session.add(user)
         db.session.commit()
+        flash(f'You have successfully created account "{user.username}"')
+
         return redirect(url_for('login'))
     return render_template('signup.html', title='SignUp', form=form)
 
@@ -116,6 +118,8 @@ def edit_profile():
         user.join_date = tmp1
         user.status = tmp2
         db.session.commit()        
+        flash('Your profile is successfully updated!')
+
         return render_template('profile.html', title=f'{current_user.fullname} Profile', posts = current_user.posts)
 
     return render_template('profile_edit.html', title='Edit Profile', form = form, username=user.username)
@@ -142,6 +146,19 @@ def create():
 def edit_post():
     form = EditPostForm()
     return render_template('edit_post.html', title='Edit Post', form = form)
+
+
+
+@app.route('/like/<int:post_id>', methods=["POST"])
+@login_required
+def like(post_id):
+    like = Like.query.filter_by(user_id == current_user.post_id== post_id)
+    if not like:
+        like = Like(user_id = current_user.id, post_id = post_id)
+        db.session.add(like)
+        db.session.commit()
+        return make_response(200, jsonify({"status" : True}))
+    return make_response(403, jsonify({"status" : False}))
 
 
 if __name__ == '__main__':

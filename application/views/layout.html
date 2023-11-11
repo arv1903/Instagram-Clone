@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+        body {
+            padding: 20px;
+            background: linear-gradient(to right, #F8F6F4, #E3F4F4, #D2E9E9, #C4DFDF);
+        }
         * {
-            background-color: rgb(229, 229, 229);
+            background-color: white;
             margin: auto;
             box-sizing: border-box;
             border-radius: 5px;
@@ -18,16 +22,15 @@
             padding: 10px; 
             margin-bottom: 20px; 
             background-color: white;
-        }
-
-        body {
-            padding: 20px;
-        }
+        }       
 
         section.content {
-            min-height: calc(100vh - 100px);
+            min-height: calc(100vh - 40px);
             width: 576px;
             margin: 0px auto;
+            padding-left: 5px;
+            padding-right: 5px;
+            border: 2px solid black;
         }
 
         header ul li {
@@ -41,7 +44,6 @@
         div.post-container {
             border: 1px solid black;
             margin: 50px auto;
-            text-align: center;
             padding: 5px;
         }
 
@@ -136,8 +138,30 @@
         }
 
         fieldset.field-login {
-            border-color: darkgreen;
+            border-color: white;
+            margin: 5px;
         }
+
+        div .post-header {
+            display: flex;
+            gap: 10px;
+        }
+        .post-header img {
+            border-radius: 50%;
+        }
+        input {
+			width: 100%;
+			padding: 15px;
+			margin: 5px;
+			border-radius: 10px;
+			border: 1px solid #6d6868;
+			font-family: inherit;
+		}
+
+        footer {
+            background: linear-gradient(to right, #F8F6F4, #E3F4F4, #D2E9E9, #C4DFDF);
+        }
+
     </style>
     {% if title %}
         <title>{{ title }} - Website</title>

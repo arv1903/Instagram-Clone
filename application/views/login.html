@@ -5,9 +5,9 @@
         <form method="POST" action="">
 			{{ form.hidden_tag() }}
 			<fieldset class="field-login">
-				<legend class="border-login">Login</legend>
+				<legend class="legend-login">Login</legend>
 
-				<div class="">
+				<div class="login-username">
 					{{ form.username.label(class="") }}
 
 					{% if form.username.errors%}
@@ -23,7 +23,7 @@
 
 				</div>
 
-				<div class="">
+				<div class="login-password">
 					{{ form.password.label(class="") }}
 
 					{% if form.password.errors%}
@@ -39,7 +39,7 @@
 
 				</div>
 			</fieldset>
-			<div class="">
+			<div class="" style="width: 95%;">
 				{{ form.submit(class="btn btn-outline-info") }}
 				<small class="">
 					<a href="{{ url_for('forgot') }}">Lupa Kata Sandi?</a>
