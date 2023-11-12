@@ -29,16 +29,33 @@
         {% for post in posts.items %}
             <div class="post" style = "border: 1px black solid; margin: 10px 0px;">
                 <div class = "post-header">
-                    <img src="{{ url_for('static', filename='images/' + post.posts_owner.profile_pic) }}" alt="Post owner" style = "height : 30px; width: 30px;">
-                    <h2>{{ post.posts_owner.username }}</h2>
+                    <img src="{{ url_for('static', filename='images/' + post.posts_owner.profile_pic) }}" alt="Post owner" style = "height : 40px; width: 40px;">
+                    <h2>@{{ post.posts_owner.username }}</h2>
                 </div>
                 <img src="{{ url_for('static', filename='' + post.photo) }}" alt="Post Image">
                 <p>{{ post.caption }}</p>
 
                 <div class="post-footer">
-                    <span id = "likeBtn">❤️{{ post.likes | length  }}</span>
-                    <span id = "commentBtn">🚩{{ post.comments | length }}</span>
-                </div>
+                    <span id = "likeBtn" data-post-id="{{ post.id}}">❤</span><span id="likeCounter">{{ post.likes | length  }}</span>
+                    <span id = "commentBtn" data-post-id="{{ post.id }}">🚩</span><span id="commentCounter">{{ post.comments | length }}</span>
+                </div>
+      
+                <script>
+                    document.querySelectorAll("#likeBtn").forEach(btn => {
+                        btn.addEventListener('click', function(){
+                            const xhr = new XMLHttpRequest();
+                            xhr.open('POST', '/like/${this.data.set.postId}', true);
+                            xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
+                            xhr.onload = function() {
+                                if (xhr.status == 200) {
+                                    const response = JSON.parse(xhr.responseText);
+                                    console.log(response.status);
+                                }
+                            }
+                            xhr.send();
+                        })
+                    })
+                </script>
             </div>
         {% endfor %}
     </div>

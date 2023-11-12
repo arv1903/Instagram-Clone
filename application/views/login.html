@@ -14,7 +14,7 @@
 						{{ form.username(class="") }}
 						<div class="">
 							{% for error in form.username.errors %}
-								<span>{{ error }}</span>
+					f			<span>{{ error }}</span>
 							{% endfor %}
 						</div>
 					{% else %}
@@ -44,10 +44,12 @@
 				<small class="">
 					<a href="{{ url_for('forgot') }}">Lupa Kata Sandi?</a>
 				</small>
+				<br>
+				<small class="">
+					<a href="{{ url_for('signup') }}">Belum punya akun ?</a>
+				</small>
 			</div>
-			<small class="">
-				<a href="{{ url_for('signup') }}">Belum punya akun ?</a>
-			</small>
+			
 
 		</form>
 	</div>

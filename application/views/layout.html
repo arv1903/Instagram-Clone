@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/icon/Web/icon.png') }}">
     <style>
         body {
             padding: 20px;
-            background: linear-gradient(to right, #F8F6F4, #E3F4F4, #D2E9E9, #C4DFDF);
+            background: linear-gradient(to right, #ffafbd, #ffc3a0);
         }
         * {
-            background-color: white;
+            background-color: rgb(241, 241, 241);
             margin: auto;
             box-sizing: border-box;
             border-radius: 5px;
@@ -42,7 +43,6 @@
         }
 
         div.post-container {
-            border: 1px solid black;
             margin: 50px auto;
             padding: 5px;
         }
@@ -105,7 +105,7 @@
             border-radius: 50%;
             overflow: hidden;
             line-height: 100px;            
-            background: linear-gradient(to right, red, orange, purple,yellow);
+            background: linear-gradient(45deg, red, orange, purple,yellow);
             padding-top: 3px;
         }
 
@@ -137,20 +137,22 @@
             padding: 10px;
         }
 
-        fieldset.field-login {
+        fieldset {
             border-color: white;
             margin: 5px;
         }
 
         div .post-header {
-            display: flex;
-            gap: 10px;
+            width: 100px;
+            display: inline-flex;
         }
         .post-header img {
+            margin: 10px;
+            border: 1px solid blue;
             border-radius: 50%;
         }
-        input {
-			width: 100%;
+        input, form .form-control-file {
+			width: 98%;
 			padding: 15px;
 			margin: 5px;
 			border-radius: 10px;
@@ -159,7 +161,7 @@
 		}
 
         footer {
-            background: linear-gradient(to right, #F8F6F4, #E3F4F4, #D2E9E9, #C4DFDF);
+            margin : 10px
         }
 
     </style>

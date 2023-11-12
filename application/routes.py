@@ -140,26 +140,24 @@ def create():
     form = CreatePostForm()
     return render_template('create_post.html', title='Create', form = form)
     
-
 @app.route('/edit_post')
 @login_required
 def edit_post():
     form = EditPostForm()
     return render_template('edit_post.html', title='Edit Post', form = form)
 
-
-
-@app.route('/like/<int:post_id>', methods=["POST"])
+@app.route('/like/<int:post_id>', methods=['POST'])
 @login_required
 def like(post_id):
-    like = Like.query.filter_by(user_id == current_user.post_id== post_id)
+    like = Like.query.filter_by(liked_by = current_user, post_id = post_id).first()
     if not like:
-        like = Like(user_id = current_user.id, post_id = post_id)
+        like = Like(user_id=current_user.id, post_id=post_id)
         db.session.add(like)
         db.session.commit()
         return make_response(200, jsonify({"status" : True}))
-    return make_response(403, jsonify({"status" : False}))
-
+    db.session.delete(like)
+    db.session.commit()
+    return make_response(200, jsonify({"status" : False}))
 
 if __name__ == '__main__':
     app.run(debug=True)
