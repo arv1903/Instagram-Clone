@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-    <div class="form-box" style = "border: 1px black solid;">
+    <div class="form-box" style = "border: 1px solid #ddd;">
         <h2>Create a new post</h2>
         <form method = "POST" enctype = "multipart/form-data">
             {{ form.hidden_tag() }}
@@ -27,7 +27,7 @@
 
     <div class="post-container">
         {% for post in posts.items %}
-            <div class="post" style = "border: 1px black solid; margin: 10px 0px;">
+            <div class="post" style = "border: 1px solid #ddd; margin: 10px 0px;">
                 <div class = "post-header">
                     <img src="{{ url_for('static', filename='images/' + post.posts_owner.profile_pic) }}" alt="Post owner" style = "height : 40px; width: 40px;">
                     <h2>@{{ post.posts_owner.username }}</h2>
