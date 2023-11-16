@@ -41,21 +41,26 @@
                 </div>
       
                 <script>
-                    document.querySelectorAll("#likeBtn").forEach(btn => {
+                    document.querySelectorAll("#likeBtn").forEach(btn =>{
                         btn.addEventListener('click', function(){
+                            // console.log(this.dataset.postId);
                             const xhr = new XMLHttpRequest();
-                            xhr.open('POST', '/like/${this.data.set.postId}', true);
-                            xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
-                            xhr.onload = function() {
-                                if (xhr.status == 200) {
+                            xhr.open('POST', 'http://127.0.0.1:5000/like', true);
+                            xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+
+                            xhr.onload = function(){
+                                if (xhr.status === 200){
                                     const response = JSON.parse(xhr.responseText);
                                     console.log(response.status);
                                 }
-                            }
-                            xhr.send();
+                            };
+                            const data = JSON.stringify({'postId': this.dataset.postId});
+                            xhr.send(data);
+
                         })
                     })
-                </script>
+                </script>
+
             </div>
         {% endfor %}
     </div>

@@ -4,6 +4,7 @@ from flask_migrate import Migrate
 # from flask_session import Session
 from flask_login import LoginManager
 from flask_mail import Mail
+from flask_cors import CORS
 from dotenv import load_dotenv
 import os
 from datetime import timedelta
@@ -35,6 +36,8 @@ app.config['MAIL_PASSWORD'] = 'kstu vnhz edgk hmmh'
 app.config['MAIL_USE_TLS'] = True
 
 mail = Mail(app)
+
+cors = CORS(app)
 
 
 from application.routes import *

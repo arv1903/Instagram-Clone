@@ -35,7 +35,7 @@ class ResetPasswordForm(FlaskForm):
 
 class ForgotPasswordForm(FlaskForm):
     email                = EmailField("E-mail", validators=[DataRequired(), Email(), exists_email])
-    # recaptcha            = RecaptchaField()
+    recaptcha            = RecaptchaField()
     submit               = SubmitField("Send link verification to e-mail")
 
 class VerificationResetPasswordForm(FlaskForm):

@@ -56,20 +56,23 @@
 				</div>
 
         		<div class="">
-					{{ form.profile_pic.label(class="") }}
+                    {{ form.profile_pic.label(class="") }}
 
-					{% if form.profile_pic.errors%}
-						{{ form.profile_pic(class="") }}
-						<div class="">
-							{% for error in form.profile_pic.errors %}
-								<span>{{ error }}</span>
-							{% endfor %}
-						</div>
-					{% else %}
-						{{ form.profile_pic(class=" ") }}
-					{% endif %}
+                    {% if form.profile_pic.errors %}
+                        {{ form.profile_pic(class="file-input") }}
+                        <div class="">
+                            {% for error in form.profile_pic.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.profile_pic(class="file-input", onchange="previewImage(this)") }}
+                    {% endif %}
 
-				</div>
+                    <div class="image-preview">
+                        <img id="preview" src="#" alt="Preview" style="display: none; max-width: 100%; max-height: 200px;">
+                    </div>
+                </div>
 
 				<div class="">
 					{{ form.bio.label(class="") }}
@@ -91,6 +94,25 @@
 				{{ form.submit(class="btn btn-outline-info") }}
 			</div>
 		</form>
+		<script>
+			function previewImage(input) {
+				var preview = document.getElementById('preview');
+				var file = input.files[0];
+				var reader = new FileReader();
+	
+				reader.onload = function (e) {
+					preview.src = e.target.result;
+					preview.style.display = 'block';
+				};
+	
+				if (file) {
+					reader.readAsDataURL(file);
+				} else {
+					preview.src = '#';
+					preview.style.display = 'none';
+				}
+			}
+		</script>
 	</div>
 {% endblock content %}
 

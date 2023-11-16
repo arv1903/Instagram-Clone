@@ -82,7 +82,7 @@ def signup():
         flash(f'You have successfully created account "{user.username}"')
 
         return redirect(url_for('login'))
-    return render_template('signup.html', title='SignUp', form=form)
+    return render_template('signup.html', title='Sign Up', form=form)
 
 @app.route('/about')
 def about():
@@ -97,7 +97,7 @@ def forgot():
         print(form.email.data)
         mail.send(msg)
 
-    return render_template('forgot_password.html', title='Forgot', form = form)
+    return render_template('forgot_password.html', title='Forgot Password', form = form)
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
@@ -140,24 +140,33 @@ def create():
     form = CreatePostForm()
     return render_template('create_post.html', title='Create', form = form)
     
-@app.route('/edit_post')
+@app.route('/edit_post', methods=['GET', 'POST'])
 @login_required
 def edit_post():
+
+    # UNFUNCTIONAL
+
     form = EditPostForm()
+
+
+
     return render_template('edit_post.html', title='Edit Post', form = form)
 
-@app.route('/like/<int:post_id>', methods=['POST'])
+@app.route('/like', methods=['GET','POST'])
 @login_required
-def like(post_id):
-    like = Like.query.filter_by(liked_by = current_user, post_id = post_id).first()
+def like():
+    data = request.json
+    post_id = int(data['postId'])
+    like = Like.query.filter_by(user_id = current_user, post_id=post_id).first()
     if not like:
         like = Like(user_id=current_user.id, post_id=post_id)
         db.session.add(like)
         db.session.commit()
-        return make_response(200, jsonify({"status" : True}))
+        return make_response(200, jsonify({"status" : True}), 200)
+    
     db.session.delete(like)
     db.session.commit()
-    return make_response(200, jsonify({"status" : False}))
+    return make_response(200, jsonify({"status" : False}), 200)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True) 
