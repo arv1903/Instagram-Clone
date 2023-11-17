@@ -7,8 +7,33 @@
     <style>
         body {
             padding: 20px;
-            background: linear-gradient(to right, #ffafbd, salmon, #ffc3a0);
         }
+
+        #gradient {
+                background: linear-gradient(130deg, #001B79, #1640D6, #ED5AB3, #FF90C2);
+            background-size: 200% 200%;
+
+            -webkit-animation: Animation 5s ease infinite;
+            -moz-animation: Animation 5s ease infinite;
+            animation: Animation 5s ease infinite;
+        }
+
+        @-webkit-keyframes Animation {
+            0%{background-position:10% 0%}
+            50%{background-position:91% 100%}
+            100%{background-position:10% 0%}
+        }
+        @-moz-keyframes Animation {
+            0%{background-position:10% 0%}
+            50%{background-position:91% 100%}
+            100%{background-position:10% 0%}
+        }
+        @keyframes Animation { 
+            0%{background-position:10% 0%}
+            50%{background-position:91% 100%}
+            100%{background-position:10% 0%}
+        }
+
         * {
             background-color: rgb(241, 241, 241);
             margin: auto;
@@ -33,7 +58,7 @@
             padding-right: 5px;
             border: 2px solid #816969;
             border-radius: 5px;
-            box-shadow: 2px 2px 2px 2px rgb(170, 128, 128);
+            box-shadow: 2px 2px 2px 2px rgb(201, 201, 201);
         }
 
         header ul li {
@@ -166,7 +191,7 @@
         <title>Website</title>
     {% endif %}
 </head>
-<body>
+<body id = "gradient">
     <section class="content">
         {% if current_user.is_authenticated %}
             {% include "components/login-header.html" %}
