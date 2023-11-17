@@ -42,6 +42,7 @@ def logout():
 @login_required
 def profile(username):
     posts = current_user.posts
+    posts.reverse()
     return render_template('profile.html', title=f'{current_user.fullname} Profile', posts = posts)
 
 @app.route('/', methods=['GET', 'POST'])
@@ -124,9 +125,27 @@ def edit_profile():
 
     return render_template('profile_edit.html', title='Edit Profile', form = form, username=user.username)
 
-@app.route('/reset')
+@app.route('/reset', methods = ['POST', 'GET'])
 def reset():
     form = ResetPasswordForm()
+
+    user = User.query.filter_by(id=current_user.id).first()
+
+
+    if form.validate_on_submit():
+        if user.password == form.new_password.data:
+            flash('You cannot change your password to the same one')
+        elif form.new_password.data != form.confirm_new_password.data:
+            flash('Password and confirm password do not match')
+        elif user.password != form.old_password.data:
+            flash('Password is not correct')
+        else:
+            user.password = form.new_password.data
+            posts = current_user.posts
+            db.session.commit()
+
+            return render_template('profile.html', title=f'{current_user.fullname} Profile', posts = posts)
+
     return render_template('reset_password.html', title='Reset', form = form)
 
 @app.route('/verif')
@@ -140,15 +159,21 @@ def create():
     form = CreatePostForm()
     return render_template('create_post.html', title='Create', form = form)
     
-@app.route('/edit_post', methods=['GET', 'POST'])
+@app.route('/edit_post/<string:id>', methods=['GET', 'POST'])
 @login_required
-def edit_post():
-
-    # UNFUNCTIONAL
+def edit_post(id):
 
     form = EditPostForm()
 
+    post = Post.query.get(id)
 
+    if form.validate_on_submit():
+        post.caption = form.caption.data
+        db.session.commit()
+        return redirect(url_for('index', username = current_user.username))
+
+    elif request.method == 'GET':
+        form.caption.data = post.caption
 
     return render_template('edit_post.html', title='Edit Post', form = form)
 
