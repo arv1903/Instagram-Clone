@@ -123,6 +123,12 @@ def edit_profile():
 
         return render_template('profile.html', title=f'{current_user.fullname} Profile', posts = current_user.posts)
 
+    elif request.method == 'GET':
+        form.username.data = user.username
+        form.fullname.data = user.fullname
+        form.email.data = user.email
+        form.bio.data = user.bio
+
     return render_template('profile_edit.html', title='Edit Profile', form = form, username=user.username)
 
 @app.route('/reset', methods = ['POST', 'GET'])
